@@ -17,6 +17,11 @@
 		<div class="card">
 			<div class="card-header">Liste des patients</div>
 			<div class="card-body">
+				<form method="get" th:action="@{indexV3}">
+					<label>Key Word</label>
+					<input type="text" name="keyword" th:value="${keyword}"/>
+					<button type="submit" class="btn btn-primary">Chercher</button>
+				</form>
 				<table class="table">
 					 <thead>
 						<tr>
@@ -24,15 +29,28 @@
 						</tr>
 					 </thead>
 					 <tbody>
-						 <tr th:each="p:${listPatientsV2}">
+						 <tr th:each="p:${listPatientsV3}">
 							<td th:text="${p.id}"></td>
 							<td th:text="${p.nom}"></td>
 							<td th:text="${p.dateNaissance}"></td>
 							<td th:text="${p.malade}"></td>
 							<td th:text="${p.score}"></td>
+							<td>
+								<a href="#" class="btn btn-danger" th:href="@{delete(id=${p.id})}">
+									Delete
+								</a>
+							</td>
 						 </tr>
 					 </tbody>
 				  </table>
+				  <ul class="nav nav-pills">
+					<li th:each="page,status:${pages3}">
+						<a th:class="${status.index==currentPage3?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
+						   th:text="${status.index}"
+						  th:href="@{indexV3(page=${status.index},keyword=${keyword})}"
+						   ></a>
+					</li>
+				  </ul>
 			</div>
 		</div>
 	 </div>

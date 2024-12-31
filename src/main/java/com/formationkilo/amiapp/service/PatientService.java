@@ -3,6 +3,7 @@ package com.formationkilo.amiapp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,17 @@ public class PatientService implements IPatientService {
 	  return patientMapper.toPage(patientDao.findAll(PageRequest.of(page, size)));
 	}
 
+	@Override
+	public Page<PatientDto> findByNomContainsDto(String kw, PageRequest pageRequest) {
+		return patientMapper.toPage(patientDao.findByNomContains(kw, pageRequest));
+	}
+
+	@Override
+	public void deleteByDto(Long id) {
+		patientDao.deleteById(id);
+	}
+
+	
 	
 	
 
